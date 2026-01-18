@@ -4,9 +4,6 @@ import AssetAssignment from './asset_assignment.js'
 import type { HasMany } from '@adonisjs/lucid/types/relations'
 
 export default class User extends BaseModel {
-  static findAll() {
-    throw new Error("Method not implemented.")
-  }
   @column({ isPrimary: true })
   declare id: number
 

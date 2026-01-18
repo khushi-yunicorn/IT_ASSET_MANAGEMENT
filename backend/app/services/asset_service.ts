@@ -30,7 +30,7 @@ export class AssetService {
 
     const inventory = await Inventory.find(payload.inventory_id)
 
-    let asset = Asset.create({
+    const asset = Asset.create({
       asset_name: inventory?.asset_name,
       asset_type: inventory?.asset_type,
       serial_number: inventory?.serial_number,

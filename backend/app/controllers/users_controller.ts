@@ -8,7 +8,8 @@ export default class UsersController {
 
     async store({ request }: HttpContext) {
         try {
-            const payload = request.only(['name', 'email', 'contact_no', 'emp_code'])
+            const payload = request.only(['name', 'email', 'contact_no', 'emp_code', 'gender'])
+            console.log(payload);
             const user = await this.userService.create(payload)
 
             return {
@@ -26,7 +27,6 @@ export default class UsersController {
     async index({ params }: HttpContext) {
         try {
             const payload = params.id
-
             const findUser = await this.userService.find(payload)
 
             return {
@@ -54,7 +54,7 @@ export default class UsersController {
         }
         catch (error) {
             return {
-                message: "Data fetched unsucessfully",
+                message: "Data fetched unsuccessfully",
                 error
             }
         }
@@ -75,7 +75,7 @@ export default class UsersController {
         }
         catch (error) {
             return {
-                message: "Cann't update the data"
+                message: "Can't update the data"
             }
         }
     }

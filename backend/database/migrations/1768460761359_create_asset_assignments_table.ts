@@ -5,7 +5,7 @@ export default class extends BaseSchema {
 
   async up() {
     this.schema.createTable(this.tableName, (table) => {
-      table.increments('id') 
+      table.increments('id').primary()
 
       table.integer('asset_id')
             .unsigned().notNullable()
@@ -18,6 +18,7 @@ export default class extends BaseSchema {
             .onDelete('CASCADE').index()
 
       table.enum('status', ['Active', 'Returned', 'Lost']).defaultTo('Active')
+      
       table.timestamp('assigned_date')
       
       table.timestamp('return_date').defaultTo(null)

@@ -1,14 +1,21 @@
 import User from "#models/user"
 
+enum gender{
+  male = 'male',
+  female ='female'
+}
+
 export class UserService {
   async create( payload: { 
     name: string
     email: string
     contact_no: number
     emp_code: number
+    gender: gender
   })
   {
     const user = User.create(payload)
+    console.log(user);
       return user
   }
 
@@ -41,7 +48,7 @@ export class UserService {
   async delete( id: number){
 
     const user = await User.findOrFail(id)
-    console.log(user);
+    // console.log(user);
 
     user?.delete()
 
