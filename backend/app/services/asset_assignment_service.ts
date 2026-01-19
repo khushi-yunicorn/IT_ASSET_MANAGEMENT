@@ -19,14 +19,11 @@ export class AssetAssignmentService {
       user_id: payload.user_id,
       status: payload.status
     })
-    console.log(asset_assignment);
-    
     return asset_assignment
   }
 
   async find(id: number){
     const fetch = await AssetAssignment.query().where('id', id).preload('asset').preload('user')
-    console.log(fetch);
     return fetch
   }
 
@@ -37,7 +34,6 @@ export class AssetAssignmentService {
 
   async update(payload:{}, id: number){
     const data = await AssetAssignment.find(id)
-
     data?.merge(payload)
     data?.save()
     return data
@@ -46,7 +42,6 @@ export class AssetAssignmentService {
 
   async delete(id: number){
     const data = await AssetAssignment.find(id)
-
     data?.delete()
     return data
   }

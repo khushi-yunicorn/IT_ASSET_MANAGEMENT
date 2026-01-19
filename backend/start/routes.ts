@@ -9,6 +9,9 @@
 
 import AssetAssignmentsController from '#controllers/asset_assignments_controller'
 import AssetsController from '#controllers/assets_controller'
+import ExportExcelsController from '#controllers/export_excels_controller'
+import ExportPdfsController from '#controllers/export_pdfs_controller'
+import InventoriesController from '#controllers/inventories_controller'
 import UsersController from '#controllers/users_controller'
 import router from '@adonisjs/core/services/router'
 
@@ -41,3 +44,20 @@ router.group(() => {
     router.put('/:id', [AssetAssignmentsController, 'edit'])
     router.delete('/:id', [AssetAssignmentsController, 'destroy'])
 }).prefix("/asset_assignment")
+
+
+// ------Excel Export ----
+router.get('/excel', [ExportExcelsController, 'exportExcel'])
+
+// -------PDF Export-----
+router.get('/pdf', [ExportPdfsController, 'pdfExport'])
+
+
+// ------Inventory CRUD -----
+router.group(() => {
+    router.post('/register', [InventoriesController, 'store'])
+    router.get('/inventories', [InventoriesController, 'index'])
+    router.get('/:id', [InventoriesController, 'show'])
+    router.put('/:id', [InventoriesController, 'edit'])
+    router.delete('/:id', [InventoriesController, 'destroy'])
+}).prefix('/inventory')

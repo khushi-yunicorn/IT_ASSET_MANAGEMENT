@@ -4,95 +4,78 @@ import type { HttpContext } from '@adonisjs/core/http'
 
 @inject()
 export default class AssetAssignmentsController {
-    constructor(private assetAssignmentService: AssetAssignmentService){}
+    constructor(private assetAssignmentService: AssetAssignmentService) { }
 
-    async store({request, response}: HttpContext){
-        try{
-
+    async store({ request, response }: HttpContext) {
+        try {
             const payload = request.only(['asset_id', 'user_id', 'status'])
-            const asset_assignment = await this.assetAssignmentService.register(payload) 
-
-            console.log(asset_assignment);
-            return{
-                message:"Asset Assigned successfully",
+            const asset_assignment = await this.assetAssignmentService.register(payload)
+            return {
+                message: "Asset Assigned successfully",
                 asset_assignment
             }
-        }
-
-        catch(error){
-            return {
-                message: "Unable to assign the asset to user"
-            } 
+        } catch (error) {
+            return response.status(500).json({
+                message: error
+            })
         }
     }
 
-    async show({params}: HttpContext){
-        try{
+    async show({ params, response }: HttpContext) {
+        try {
             const id = params.id
-
             const fetch = await this.assetAssignmentService.find(id)
             return {
                 message: "Data fetch successfully",
                 fetch
             }
+        } catch (error) {
+            return response.status(500).json({
+                message: error
+            })
         }
-
-        catch(error){
-            return{
-                message: "Unable to fetch the data"
-            }
-        }
-
     }
 
-    async index(){
-        try{
+    async index({ response }: HttpContext) {
+        try {
             const data = await this.assetAssignmentService.findAll()
-            return{
+            return {
                 message: "All data fetched successfully",
                 data
             }
-        }
-
-        catch(error){
-            return{
-                message: "Unable to fetch the data"
-            }
+        } catch (error) {
+            return response.status(500).json({
+                message: error
+            })
         }
     }
 
-    async edit({request, params}: HttpContext){
-        try{
+    async edit({ request, params, response }: HttpContext) {
+        try {
             const payload = request.all()
             const update = await this.assetAssignmentService.update(payload, params.id)
-            return{
+            return {
                 message: "Data update successfully",
                 update
             }
+        } catch (error) {
+            return response.status(500).json({
+                message: error
+            })
         }
-
-        catch(error){
-            return {
-                message: "Unable to update the data"
-            }
-        }
-
     }
 
-    async destroy({params}:HttpContext){
-        try{
+    async destroy({ params, response }: HttpContext) {
+        try {
             const id = params.id
-            const data = await this.assetAssignmentService.delete(id)
-            return{
+            await this.assetAssignmentService.delete(id)
+            return {
                 message: "Data deleted successfully"
             }
-
-        }
-
-        catch(error){
-            return{
-                messsage: "Unable to delete the data"
-            }
+        } catch (error) {
+            return response.status(500).json({
+                message: error
+            })
         }
     }
 }

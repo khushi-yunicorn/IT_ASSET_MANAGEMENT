@@ -1,4 +1,5 @@
 import { UserService } from '#services/user_service'
+import { UserValidator } from '#validators/user';
 import { inject } from '@adonisjs/core'
 import type { HttpContext } from '@adonisjs/core/http'
 
@@ -6,91 +7,82 @@ import type { HttpContext } from '@adonisjs/core/http'
 export default class UsersController {
     constructor(private userService: UserService) { }
 
-    async store({ request }: HttpContext) {
+    async store({ request, response }: HttpContext) {
         try {
-            const payload = request.only(['name', 'email', 'contact_no', 'emp_code', 'gender'])
-            console.log(payload);
+            const payload:any = await request.validateUsing(UserValidator)
             const user = await this.userService.create(payload)
 
-            return {
+            return response.status(201).json({
                 user,
                 message: "Successfully created"
-            }
+            })
         }
         catch(error){
-            return{
-                message: "Failed to create user"
-            }
+            return response.status(500).json({
+                message: error
+            })
         }
     }
 
-    async index({ params }: HttpContext) {
+    async index({ params, response }: HttpContext) {
         try {
             const payload = params.id
             const findUser = await this.userService.find(payload)
-
             return {
                 message: "Data Fetched Successfully",
                 findUser
             }
-
         }
-        catch (error) {
-            return {
-                message: 'Invalid data',
-                error
-            }
+        catch(error){
+            return response.status(500).json({
+                message: error
+            })
         }
     }
 
-    async show() {
+    async show({response}: HttpContext) {
         try {
             const users = await this.userService.findAll()
             return {
                 message: "All Data fetch successfully",
                 users
             }
-
         }
-        catch (error) {
-            return {
-                message: "Data fetched unsuccessfully",
-                error
-            }
+        catch(error){
+            return response.status(500).json({
+                message: error
+            })
         }
     }
 
-    async edit({ request, params }: HttpContext) {
+    async edit({ request, params, response}: HttpContext) {
         try {
             const id = params.id
-            console.log(params);
-
-            const payload = request.all()
-
+            const payload: any = request.all()
             const users = await this.userService.update(id, payload)
             return {
                 message: "Data updated successfully",
                 users
             }
         }
-        catch (error) {
-            return {
-                message: "Can't update the data"
-            }
+        catch(error){
+            return response.status(500).json({
+                message: error
+            })
         }
     }
 
-    async destroy({ params }: HttpContext) {
+    async destroy({ params, response }: HttpContext) {
         try {
             await this.userService.delete(params.id)
             return {
                 message: "User Deleted Successfully",
             }
         }
-        catch (error) {
-            return {
-                message: "User not deleted"
-            }
+        catch(error){
+            return response.status(500).json({
+                message: error
+            })
         }
     }
 }

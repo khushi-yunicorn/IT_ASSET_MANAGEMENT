@@ -27,9 +27,7 @@ interface CreateUserPayload {
 
 export class AssetService {
   async register(payload: CreateUserPayload) {
-
     const inventory = await Inventory.find(payload.inventory_id)
-
     const asset = Asset.create({
       asset_name: inventory?.asset_name,
       asset_type: inventory?.asset_type,
@@ -38,8 +36,6 @@ export class AssetService {
       inventory_id:payload.inventory_id,
       location:payload.location,
     })
-    
-    console.log(payload);
     return asset
   }
 
@@ -64,14 +60,12 @@ export class AssetService {
     }
     asset.merge(payload) 
     await asset.save()
-
     return asset
   }
 
   async delete(id: number) {
     const asset = await Asset.findOrFail(id)
     asset.delete()
-
     return asset
   }
 }
