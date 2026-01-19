@@ -1,4 +1,5 @@
 import { AssetAssignmentService } from '#services/asset_assignment_service'
+import { AssetAssignmentCreateValidator, AssetAssignmentUpdateValidator } from '#validators/asset_assignment'
 import { inject } from '@adonisjs/core'
 import type { HttpContext } from '@adonisjs/core/http'
 
@@ -8,7 +9,7 @@ export default class AssetAssignmentsController {
 
     async store({ request, response }: HttpContext) {
         try {
-            const payload = request.only(['asset_id', 'user_id', 'status'])
+            const payload: any = await request.validateUsing(AssetAssignmentCreateValidator)
             const asset_assignment = await this.assetAssignmentService.register(payload)
             return {
                 message: "Asset Assigned successfully",
@@ -52,7 +53,7 @@ export default class AssetAssignmentsController {
 
     async edit({ request, params, response }: HttpContext) {
         try {
-            const payload = request.all()
+            const payload = await request.validateUsing(AssetAssignmentUpdateValidator)
             const update = await this.assetAssignmentService.update(payload, params.id)
             return {
                 message: "Data update successfully",

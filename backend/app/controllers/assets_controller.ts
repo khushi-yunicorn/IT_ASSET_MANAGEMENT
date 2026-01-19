@@ -21,7 +21,7 @@ export default class AssetsController {
         }
     }
 
-    async show({response}: HttpContext) {
+    async index({response}: HttpContext) {
         try {
             const users = await this.assetService.findAll()
             return {
@@ -35,7 +35,7 @@ export default class AssetsController {
         }
     }
 
-    async index({ params, response }: HttpContext) {
+    async show({ params, response }: HttpContext) {
         try {
             const payload = params.id
             const user = await this.assetService.find(payload)

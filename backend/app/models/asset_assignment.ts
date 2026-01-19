@@ -11,7 +11,7 @@ export default class AssetAssignment extends BaseModel {
 
   @column()
   declare asset_id: number
-
+ 
   @column()
   declare user_id: number
 

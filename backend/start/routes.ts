@@ -19,9 +19,9 @@ import router from '@adonisjs/core/services/router'
 // ----- User API-------
 router.group(() => {
     router.post('/register', [UsersController, 'store'])
-    router.get('/users', [UsersController, 'show'])
+    router.get('/users', [UsersController, 'index'])
     router.group(() => {
-        router.get('/:id', [UsersController, 'index'])
+        router.get('/:id', [UsersController, 'show'])
         router.put('/:id', [UsersController, 'edit'])
         router.delete('/:id', [UsersController, 'destroy'])
     }).prefix('/user')
@@ -30,8 +30,8 @@ router.group(() => {
 // ------ Asset API -------
 router.group(() => {
     router.post('/register', [AssetsController, 'store'])
-    router.get('/assets', [AssetsController, 'show'])
-    router.get(':id', [AssetsController, 'index'])
+    router.get('/assets', [AssetsController, 'index'])
+    router.get(':id', [AssetsController, 'show'])
     router.put('/:id', [AssetsController, 'edit'])
     router.delete('/asset/:id', [AssetsController, 'destroy'])
 }).prefix('/asset')
@@ -45,13 +45,11 @@ router.group(() => {
     router.delete('/:id', [AssetAssignmentsController, 'destroy'])
 }).prefix("/asset_assignment")
 
-
 // ------Excel Export ----
 router.get('/excel', [ExportExcelsController, 'exportExcel'])
 
 // -------PDF Export-----
 router.get('/pdf', [ExportPdfsController, 'pdfExport'])
-
 
 // ------Inventory CRUD -----
 router.group(() => {

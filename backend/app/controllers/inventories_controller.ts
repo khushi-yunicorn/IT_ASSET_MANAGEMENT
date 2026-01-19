@@ -2,6 +2,7 @@ import { HttpContext } from '@adonisjs/core/http'
 
 import { InventoryService } from "#services/inventory_service";
 import { inject } from "@adonisjs/core";
+import { InventoryUpdateValidator, InventoryCreateValidator } from '#validators/inventory';
 
 @inject()
 export default class InventoriesController {
@@ -9,13 +10,12 @@ export default class InventoriesController {
 
     async store({ request, response }: HttpContext) {
         try {
-            const payload: any = request.all()
+            const payload: any = await request.validateUsing(InventoryCreateValidator)
             const inventory =await this.inventory.register(payload)
             return {
                 message: "Inventory add successfully",
                 inventory
             }
-
         } catch(error){
             return response.status(500).json({
                 message: error
@@ -44,7 +44,6 @@ export default class InventoriesController {
                 message: "Data fetched successfully",
                  inventory
             }
-            
         }catch(error){
             return response.status(500).json({
                 message: error
@@ -54,7 +53,7 @@ export default class InventoriesController {
 
     async edit({request, params, response}: HttpContext){
         try {
-            const payload = request.all()
+            const payload = await request.validateUsing(InventoryUpdateValidator)
             const data = await this.inventory.update(payload, params.id)
             return{
                 message: "Data update successfully",

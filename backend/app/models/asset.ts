@@ -11,7 +11,7 @@ export default class Asset extends BaseModel {
   @column()
   declare asset_name: string
 
-  @column()
+  @column() 
   declare asset_type: 'Laptop' | 'Monitor' | 'Mouse' | 'Keyboard' | 'Charger' | null
 
   @column()
@@ -22,9 +22,6 @@ export default class Asset extends BaseModel {
 
   @column()
   declare inventory_id:number | null
-
-  @column()
-  declare purchase_date: DateTime
 
   @column()
   declare location:string | null

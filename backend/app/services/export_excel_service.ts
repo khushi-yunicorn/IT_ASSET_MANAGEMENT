@@ -20,11 +20,11 @@ export class ExportExcelService {
       { header: 'Asset Name', key: 'asset_name', width: 20, style: { font: font } },
       { header: 'Asset Type', key: 'asset_type', width: 20, style: { font: font } },
       { header: 'Serial Number', key: 'serial_number', width: 20, style: { font: font } },
-      { header: 'Purchased Date', key: 'purchase_date', width: 16, style: { font: font } },
-      { header: 'Purchased Time', key: 'purchase_time', width: 17, style: { font: font } },
       { header: 'Quantity', key: 'quantity', width: 10, style: { font: font } },
       { header: 'Vendor Name', key: 'vendor_name', width: 25, style: { font: font } },
       { header: 'Status', key: 'status', width: 15, style: { font: font } },
+      { header: 'Purchased Date', key: 'purchase_date', width: 16, style: { font: font } },
+      { header: 'Purchased Time', key: 'purchase_time', width: 17, style: { font: font } }
     ]
     inventories.forEach((inventory) => {
       worksheet.addRow({
@@ -32,11 +32,11 @@ export class ExportExcelService {
         asset_name: inventory.asset_name,
         asset_type: inventory.asset_type,
         serial_number: inventory.serial_number,
-        purchase_date: inventory.purchase_date.setLocale('en-gb').toLocaleString(),
-        purchase_time: inventory.purchase_date.toLocaleString(DateTime.TIME_SIMPLE),
         vendor_name: inventory.vendor_name,
         quantity: inventory.quantity,
-        status: inventory.status.split(/(?=[A-Z])/).join(" ")
+        status: inventory.status.split(/(?=[A-Z])/).join(" "),
+        purchase_date: inventory.purchase_date.setLocale('en-gb').toLocaleString(),
+        purchase_time: inventory.purchase_date.toLocaleString(DateTime.TIME_SIMPLE)
       })
     })
     worksheet.getRow(1).font = { bold: true, size: 12 }

@@ -24,7 +24,7 @@ export default class Inventory extends BaseModel {
 
   @column()
   declare status: 'InStock' | 'OutOfStock'
-
+ 
   @column.dateTime({ autoCreate: true })
   declare purchase_date: DateTime
 

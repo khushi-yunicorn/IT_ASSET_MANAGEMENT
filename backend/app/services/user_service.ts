@@ -1,4 +1,5 @@
 import User from "#models/user"
+import ResponseHelper from "../utils/responseHelper.js"
 
 enum gender {
   male = 'male',
@@ -20,7 +21,9 @@ export class UserService {
 
   async find(id: number) {
     const user = await User.find(id)
-    return user
+    if(user){
+      return user
+    }
   }
 
   async findAll() {

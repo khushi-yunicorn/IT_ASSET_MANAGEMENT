@@ -6,7 +6,6 @@ import PDFDocument from 'pdfkit'
 export default class ExportPdfsController {
 
     async pdfExport({ response }: HttpContext) {
-
         const inventories = await Inventory.query()
             .select('id', 'asset_name', 'asset_type', 'serial_number', 'purchase_date', 'vendor_name', 'quantity', 'status')
             .orderBy('id')
@@ -17,11 +16,12 @@ export default class ExportPdfsController {
                 inventory.asset_name,
                 inventory.asset_type,
                 inventory.serial_number,
-                inventory.purchase_date.setLocale('en-gb').toLocaleString(),
-                inventory.purchase_date.toLocaleString(DateTime.TIME_SIMPLE),
                 inventory.vendor_name,
                 inventory.quantity,
-                inventory.status.split(/(?=[A-Z])/).join(" ")]
+                inventory.status.split(/(?=[A-Z])/).join(" "),
+                inventory.purchase_date.setLocale('en-gb').toLocaleString(),
+                inventory.purchase_date.toLocaleString(DateTime.TIME_SIMPLE),
+            ]
         })
 
         const doc = new PDFDocument({ margin: 20, size: 'A4' })
@@ -42,7 +42,7 @@ export default class ExportPdfsController {
             .font('Helvetica-Bold')
             .fontSize(9)
             .table({
-            data: [["S.No","Asset Name", "Asset Type", "Serial Number", "Purchased Date", "Purchased Time", "Vendor Name", "Quantity", "Status"] ]
+            data: [["S.No","Asset Name", "Asset Type", "Serial Number", "Vendor Name", "Quantity", "Status", "Purchased Date", "Purchased Time"] ]
         })
 
         doc
