@@ -10,7 +10,6 @@ export default class extends BaseSchema {
       table.string('email').notNullable().unique()
       table.bigInteger('contact_no').notNullable()
       table.integer('emp_code').notNullable().unique()
-
       table.timestamp('created_at')
       table.timestamp('updated_at')
       table.timestamp('deleted_at').defaultTo(null)

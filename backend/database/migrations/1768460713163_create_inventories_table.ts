@@ -5,18 +5,13 @@ export default class extends BaseSchema {
 
   async up() {
     this.schema.createTable(this.tableName, (table) => {
-      table.increments('id')
+      table.increments('id').primary()
       table.string('asset_name').notNullable()
-
       table.enum('asset_type', ['Laptop',  'Monitor', 'Mouse', 'Keyboard', 'Charger', null]).defaultTo(null)
-
       table.string('serial_number').notNullable()
       table.string('vendor_name').notNullable()
-
       table.integer('quantity').defaultTo(1)
-
-      table.enum('status', ['In stock', 'Out of Stock']).defaultTo('In Stock')
-
+      table.enum('status', ['InStock', 'OutOfStock']).defaultTo('InStock')
       table.timestamp('purchase_date')
       table.timestamp('updated_at')
     })

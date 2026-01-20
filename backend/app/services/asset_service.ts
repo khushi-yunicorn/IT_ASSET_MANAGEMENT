@@ -13,7 +13,6 @@ enum assetStatus {
   Available = 'Available',
   Assigned = 'Assigned',
   Maintenance = 'Maintenance'
-
 }
 
 interface CreateUserPayload {
@@ -27,25 +26,23 @@ interface CreateUserPayload {
 
 export class AssetService {
   async register(payload: CreateUserPayload) {
-
     const inventory = await Inventory.find(payload.inventory_id)
-
     const asset = Asset.create({
       asset_name: inventory?.asset_name,
       asset_type: inventory?.asset_type,
       serial_number: inventory?.serial_number,
       status: payload.status,
-      inventory_id:payload.inventory_id,
-      location:payload.location,
+      inventory_id: payload.inventory_id,
+      location: payload.location,
     })
-    
-    console.log(payload);
     return asset
   }
 
   async find(id: number) {
     const asset = await Asset.query().where('id', id).preload('inventory')
-    return asset
+    if (asset){
+      return asset
+    }
   }
 
   async findAll() {
@@ -53,25 +50,20 @@ export class AssetService {
     return assets
   }
 
-  async update(id: number, payload:{}) {
-
+  async update(id: number, payload: {}) {
     const asset = await Asset.find(id)
-
-    if(!asset){
-      return{
-        message: "Asset doesn't exist"
-      }
+    if (asset) {
+      asset.merge(payload)
+      await asset.save()
+      return asset
     }
-    asset.merge(payload) 
-    await asset.save()
-
-    return asset
   }
 
   async delete(id: number) {
     const asset = await Asset.findOrFail(id)
-    asset.delete()
-
-    return asset
+    if (asset) {
+      asset.delete()
+      return asset
+    }
   }
 }
