@@ -21,7 +21,7 @@ export class UserService {
 
   async find(id: number) {
     const user = await User.find(id)
-    if(user){
+    if (user) {
       return user
     }
   }
@@ -33,19 +33,16 @@ export class UserService {
 
   async update(payload: any, id: number) {
     const user = await User.find(id)
-    if (!user) {
-      return {
-        message: "User doesn't exist"
-      }
+    if (user) {
+      user.merge(payload)
+      await user.save()
+      return user
     }
-    user.merge(payload)
-    await user.save()
-    return user
   }
 
-  async delete(id: number) {
-    const user = await User.findOrFail(id)
-    user?.delete()
-    return user
-  }
+  async delete (id: number) {
+  const user = await User.findOrFail(id)
+  user?.delete()
+  return user
+}
 }

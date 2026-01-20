@@ -1,4 +1,3 @@
-import i18n from '#config/i18n';
 import { UserService } from '#services/user_service'
 import { UserCreateValidator, UserUpdateValidator } from '#validators/user';
 import { inject } from '@adonisjs/core'
@@ -25,12 +24,12 @@ export default class UsersController {
             )
         }
     }
-
+ 
     async show({ params, response, i18n }: HttpContext) {
         try {
             const payload = params.id
             const findUser = await this.userService.find(payload)
-            if(!findUser){
+            if (!findUser) {
                 return ResponseHelper.notFound(
                     response,
                     i18n.t('validator.users.not_found')
@@ -41,7 +40,7 @@ export default class UsersController {
                 i18n.t('validator.users.fetched_one'),
                 findUser
             )
-        }catch (error) {
+        } catch (error) {
             return ResponseHelper.badRequest(
                 response,
                 i18n.t('validator.users.fetch_failed')
@@ -70,6 +69,12 @@ export default class UsersController {
             const id = params.id
             const payload: any = await request.validateUsing(UserUpdateValidator)
             const user = await this.userService.update(payload, id)
+            if (!user) {
+                return ResponseHelper.notFound(
+                    response,
+                    i18n.t('validator.users.not_found')
+                )
+            }
             return ResponseHelper.success(
                 response,
                 i18n.t('validator.users.updated'),
@@ -85,13 +90,13 @@ export default class UsersController {
 
     async destroy({ params, response, i18n }: HttpContext) {
         try {
-            const user= await this.userService.delete(params.id)
+            const user = await this.userService.delete(params.id)
             return ResponseHelper.success(
                 response,
                 i18n.t('validator.users.deleted'),
                 user
             )
-        }catch (error) {
+        } catch (error) {
             return ResponseHelper.badRequest(
                 response,
                 i18n.t('validator.users.delete_failed')

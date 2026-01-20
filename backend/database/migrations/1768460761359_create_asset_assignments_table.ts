@@ -16,7 +16,6 @@ export default class extends BaseSchema {
             .onDelete('CASCADE').index()
       table.enum('status', ['Active', 'Returned', 'Lost']).defaultTo('Active')
       table.timestamp('assigned_date')
-      table.timestamp('return_date').defaultTo(null)
       table.timestamp('updated_at')
     })
   }

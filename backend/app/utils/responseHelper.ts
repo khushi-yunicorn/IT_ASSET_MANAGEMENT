@@ -1,7 +1,6 @@
 import type { HttpContext } from '@adonisjs/core/http'
 
 export default class ResponseHelper {
-
     // Success Response (200 OK)
     public static success(
         response: HttpContext['response'],
@@ -10,8 +9,7 @@ export default class ResponseHelper {
     ) {
         return response.status(200).json({
             message,
-            data,
-            timestamp: new Date().toISOString(),
+            data
         })
     }
 
@@ -22,8 +20,7 @@ export default class ResponseHelper {
         data: any = null) {
         return response.status(201).json({
             message,
-            data,
-            timestamp: new Date().toISOString(),
+            data
         })
     }
 
@@ -33,8 +30,7 @@ export default class ResponseHelper {
         message: string
     ) {
         return response.status(400).json({
-            message,
-            timestamp: new Date().toISOString(),
+            message
         })
     }
 
@@ -44,8 +40,7 @@ export default class ResponseHelper {
         message: string = 'Resource not found',
     ) {
         return response.status(404).json({
-            message,
-            timestamp: new Date().toISOString(),
+            message
         })
     }
 }

@@ -11,5 +11,46 @@
     "deleted": "User deleted successfully",
     "delete_failed": "Failed to delete user",
     "not_found": "User not found"
+  },
+  "assets":{
+    "created": "Asset created successfully",
+    "create_failed": "Failed to create asset",
+    "fetched": "Assets fetched successfully",
+    "fetch_failed": "Failed to fetch asset",
+    "fetched_one": "Asset fetched successfully",
+    "updated": "Asset updated successfully",
+    "update_failed": "Failed to update asset",
+    "deleted": "Asset deleted successfully",
+    "delete_failed": "Failed to delete asset",
+    "not_found": "Asset not found"
+  },
+  "asset_assignment":{
+    "created": "Asset assigned successfully",
+    "create_failed": "Failed to assign asset",
+    "fetched": "Assigned assets fetched successfully",
+    "fetch_failed": "Failed to fetch assigned asset",
+    "fetched_one": "Asset fetched successfully",
+    "updated": "Asset updated successfully",
+    "update_failed": "Failed to update asset",
+    "deleted": "Asset deleted successfully",
+    "delete_failed": "Failed to delete asset",
+    "not_found": "Asset not found"
+  },
+  "inventories":{
+    "created": "Inventory created successfully",
+    "create_failed": "Failed to create inventory",
+    "fetched": " Inventories fetched successfully",
+    "fetch_failed": "Failed to fetch inventory",
+    "fetched_one": "Inventory fetched successfully",
+    "updated": "Inventory updated successfully",
+    "update_failed": "Failed to update inventory",
+    "deleted": "Inventory deleted successfully",
+    "delete_failed": "Failed to delete inventory",
+    "not_found": "Inventory not found"
+  },
+  "exports":{
+    "pdf": "Pdf export successfully",
+    "excel": "Excel export successfully",
+    "export_failed": "Failed to export"
   }
 } 

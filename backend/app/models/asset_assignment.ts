@@ -16,9 +16,6 @@ export default class AssetAssignment extends BaseModel {
   declare user_id: number
 
   @column()
-  declare return_date: DateTime
-
-  @column()
   declare status: 'Active' | 'Returned' | 'Lost'
 
   @column.dateTime({ autoCreate: true })

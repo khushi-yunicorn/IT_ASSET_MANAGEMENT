@@ -8,7 +8,7 @@ enum assetType {
   Charger = "Charger"
 }
 
-enum status{
+enum status {
   InStock = "InStock",
   OutOfStock = "OutOfStock"
 }
@@ -23,36 +23,37 @@ interface CreateUserPayload {
 }
 
 export class InventoryService {
-  async register(payload: CreateUserPayload){
+  async register(payload: CreateUserPayload) {
     const data = await Inventory.create(payload)
     return data
   }
 
-  async find( id: number){
+  async find(id: number) {
     const data = await Inventory.query().where('id', id)
-    return data
+    if (data) {
+      return data
+    }
   }
 
-  async findAll(){
+  async findAll() {
     const data = await Inventory.all()
     return data
   }
 
-  async update(payload: any, id: number){
+  async update(payload: any, id: number) {
     const inventory = await Inventory.find(id)
-    if(!inventory){
-      return {
-        message: "Data not found"
-      }
+    if (inventory) {
+      inventory.merge(payload)
+      await inventory.save()
+      return inventory
     }
-    inventory?.merge(payload)
-    await inventory?.save()
-    return inventory
   }
 
-  async delete (id: number){
+  async delete(id: number) {
     const data = await Inventory.find(id)
-    data?.delete()
-    return data
+    if (data) {
+      data.delete()
+      return data
+    }
   }
 }
